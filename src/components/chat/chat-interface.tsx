@@ -23,15 +23,19 @@ type Message = {
   id: number;
   sender: 'client' | 'freelancer' | 'pm';
   content: string;
-  originalSender?: 'client' | 'freelancer';
+  originalSender?: 'client' | 'freelancer' | 'pm';
 };
 
 type User = 'pm' | 'client' | 'freelancer';
 
 const projectDetails = "Project 'Phoenix': A web app redesign for a coffee shop. Tech stack: Next.js, Tailwind CSS, Stripe. Deadline: 3 months.";
 
-export function ChatInterface() {
-  const [currentUser, setCurrentUser] = useState<User>('pm');
+interface ChatInterfaceProps {
+    startAs: User;
+}
+
+export function ChatInterface({ startAs }: ChatInterfaceProps) {
+  const [currentUser, setCurrentUser] = useState<User>(startAs);
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, sender: 'pm', content: "Hi Client, the freelancer is ready to start. I'll be your point of contact.", originalSender: 'pm' },
     { id: 2, sender: 'pm', content: "Hi Freelancer, welcome to the project. The client is excited to get started.", originalSender: 'pm' },
@@ -119,16 +123,18 @@ export function ChatInterface() {
                 <CardTitle>Project Phoenix Chat</CardTitle>
                 <CardDescription>Currently viewing as: <span className="font-bold text-primary">{currentUser.toUpperCase()}</span></CardDescription>
             </div>
-            <Select onValueChange={(value: User) => setCurrentUser(value)} defaultValue={currentUser}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Switch View" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="pm">Project Manager</SelectItem>
-                <SelectItem value="client">Client</SelectItem>
-                <SelectItem value="freelancer">Freelancer</SelectItem>
-              </SelectContent>
-            </Select>
+            { startAs === 'pm' && (
+                <Select onValueChange={(value: User) => setCurrentUser(value)} defaultValue={currentUser}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Switch View" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pm">Project Manager</SelectItem>
+                    <SelectItem value="client">Client</SelectItem>
+                    <SelectItem value="freelancer">Freelancer</SelectItem>
+                  </SelectContent>
+                </Select>
+            )}
         </div>
       </CardHeader>
       <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Briefcase, UserCheck } from "lucide-react";
+import { ArrowRight, Briefcase, UserCheck, Users } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -20,26 +20,26 @@ export default function Home() {
                 Your Flexible Workforce Solution
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                Choose the service model that fits your project needs. Get matched with top talent, seamlessly.
+                Choose the portal that fits your role. Get matched with top talent, seamlessly.
               </p>
             </div>
-            <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 lg:grid-cols-2 lg:gap-12">
+            <div className="mx-auto grid max-w-5xl items-start gap-6 py-12 lg:grid-cols-3 lg:gap-8">
               <Card className="transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                 <CardHeader className="p-8">
                   <div className="flex items-center gap-4">
                     <div className="bg-primary/10 p-3 rounded-full">
                       <Briefcase className="h-8 w-8 text-primary" />
                     </div>
-                    <CardTitle className="text-3xl font-bold font-headline">Managed Service</CardTitle>
+                    <CardTitle className="text-2xl font-bold font-headline">Project Manager</CardTitle>
                   </div>
                   <CardDescription className="pt-4 text-base">
-                    Premium, hands-off experience. Our project managers handle everything from vetting to delivery, ensuring top-quality results with zero hassle. Perfect for complex projects.
+                    Oversee projects, manage talent, and ensure quality delivery from a centralized hub.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-8 pt-0">
-                  <Link href="/dashboard">
+                  <Link href="/pm">
                     <Button className="w-full text-lg" size="lg">
-                      Get Started <ArrowRight className="ml-2" />
+                      Enter PM Portal <ArrowRight className="ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
@@ -50,16 +50,36 @@ export default function Home() {
                     <div className="bg-accent/10 p-3 rounded-full">
                       <UserCheck className="h-8 w-8 text-accent" />
                     </div>
-                    <CardTitle className="text-3xl font-bold font-headline">Direct Service</CardTitle>
+                    <CardTitle className="text-2xl font-bold font-headline">Client</CardTitle>
                   </div>
                   <CardDescription className="pt-4 text-base">
-                    A low-fee, direct-to-freelancer model. You manage the project and communications. Ideal for straightforward tasks and when you have time to oversee the work.
+                    Track your project's progress, approve deliverables, and communicate with your team.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-8 pt-0">
-                  <Link href="/dashboard">
+                  <Link href="/client">
                     <Button variant="secondary" className="w-full text-lg" size="lg">
-                      Find a Freelancer <ArrowRight className="ml-2" />
+                      Enter Client Portal <ArrowRight className="ml-2" />
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+               <Card className="transform transition-transform duration-300 hover:scale-105 hover:shadow-xl lg:col-span-3">
+                <CardHeader className="p-8">
+                  <div className="flex items-center gap-4">
+                    <div className="bg-secondary/20 p-3 rounded-full">
+                      <Users className="h-8 w-8 text-secondary-foreground" />
+                    </div>
+                    <CardTitle className="text-2xl font-bold font-headline">Freelancer</CardTitle>
+                  </div>
+                  <CardDescription className="pt-4 text-base">
+                    Manage your availability, complete skill tests, and collaborate on exciting new projects.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="p-8 pt-0">
+                  <Link href="/freelancer">
+                    <Button variant="outline" className="w-full text-lg" size="lg">
+                      Enter Freelancer Portal <ArrowRight className="ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
