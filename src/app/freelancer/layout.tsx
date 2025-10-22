@@ -25,6 +25,7 @@ import { Button } from '@/components/ui/button';
 
 const navItems = [
   { href: '/freelancer', icon: <Calendar />, label: 'My Schedule' },
+  { href: '/freelancer/projects', icon: <Briefcase />, label: 'Projects' },
   { href: '/freelancer/compliance', icon: <ShieldCheck />, label: 'Compliance' },
   { href: '/freelancer/chat', icon: <MessageSquare />, label: 'Messages' },
 ];
