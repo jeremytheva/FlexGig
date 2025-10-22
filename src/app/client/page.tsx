@@ -5,8 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText } from "lucide-react";
+import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ProjectTemplates } from '@/components/client/project-templates';
 
 const project = {
   name: 'E-commerce Platform',
@@ -48,6 +49,13 @@ export default function ProjectPage() {
     toast({
       title: "Upgrade Request Sent",
       description: "A project manager will contact you shortly to discuss upgrading to Managed Service for dedicated support.",
+    });
+  };
+
+  const handleSaveTemplate = () => {
+    toast({
+      title: "Project Saved as Template",
+      description: `"${project.name}" has been saved to your templates.`,
     });
   };
 
@@ -129,6 +137,13 @@ export default function ProjectPage() {
             </div>
             <Button variant="outline" onClick={handleRevisionRequest}>Request Revision</Button>
         </CardContent>
+        <CardContent className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between border-t pt-6">
+            <div>
+                <h3 className="font-semibold">Re-order this project?</h3>
+                <p className="text-sm text-muted-foreground">Save this project's scope and settings as a template for future use.</p>
+            </div>
+            <Button variant="outline" onClick={handleSaveTemplate}><Save className="mr-2 h-4 w-4" /> Save as Template</Button>
+        </CardContent>
          {revisionCount >= 2 && (
             <CardContent className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between border-t pt-6 mt-4 bg-accent/10">
                 <div>
@@ -139,6 +154,8 @@ export default function ProjectPage() {
             </CardContent>
         )}
       </Card>
+
+      <ProjectTemplates />
     </div>
   );
 }
