@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Badge } from "@/components/ui/badge";
@@ -8,6 +9,22 @@ import { Button } from "@/components/ui/button";
 import { format } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { useToast } from "@/hooks/use-toast";
+import { Skeleton } from "@/components/ui/skeleton";
+
+function ClientCalendar(props: React.ComponentProps<typeof Calendar>) {
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) {
+        return <Skeleton className="w-full h-[350px]" />;
+    }
+
+    return <Calendar {...props} />;
+}
+
 
 export default function SchedulePage() {
   const [range, setRange] = useState<DateRange | undefined>();
@@ -53,7 +70,7 @@ export default function SchedulePage() {
         <div className="md:col-span-2">
            <Card>
               <CardContent className="p-0 sm:p-2 flex justify-center">
-                <Calendar
+                <ClientCalendar
                   mode="range"
                   selected={range}
                   onSelect={setRange}
