@@ -1,3 +1,4 @@
+
 import {
   Tabs,
   TabsContent,
@@ -8,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ContractDialog } from '@/components/compliance/contract-dialog';
+import { Star } from 'lucide-react';
 
 const skillTests = [
   { name: 'React Proficiency', status: 'Passed', score: '92%' },
@@ -22,6 +24,12 @@ const contracts = [
   { name: 'Project Phoenix SOW', status: 'Awaiting Signature' },
 ];
 
+const recommendedTest = { 
+  name: 'Advanced TypeScript', 
+  status: 'Not Taken', 
+  reason: 'High demand on enterprise projects. Passing this test can increase your rate.' 
+};
+
 export default function CompliancePage() {
   return (
     <div className="space-y-8">
@@ -32,7 +40,7 @@ export default function CompliancePage() {
         </p>
       </header>
 
-      <Tabs defaultValue="contracts" className="w-full">
+      <Tabs defaultValue="skill-tests" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="contracts">Contracts</TabsTrigger>
           <TabsTrigger value="skill-tests">Skill Tests</TabsTrigger>
@@ -67,6 +75,23 @@ export default function CompliancePage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
+            <Card className="bg-primary/5 border-primary/20">
+                <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-2">
+                    <div>
+                        <CardTitle className="text-base font-semibold">Recommended Test</CardTitle>
+                        <CardDescription className="text-sm">{recommendedTest.reason}</CardDescription>
+                    </div>
+                    <Badge variant="default" className="flex items-center gap-1">
+                        <Star className="h-3 w-3"/>
+                        Recommended
+                    </Badge>
+                </CardHeader>
+                <CardContent className="flex items-center justify-between pt-2">
+                    <p className="font-medium">{recommendedTest.name}</p>
+                    <Button variant="default">Start Test</Button>
+                </CardContent>
+            </Card>
+
               {skillTests.map((test) => (
                  <div key={test.name} className="flex items-center justify-between p-3 rounded-md border">
                     <div>
@@ -76,7 +101,7 @@ export default function CompliancePage() {
                     {test.status === 'Not Taken' ? (
                         <Button variant="outline">Start Test</Button>
                     ) : (
-                        <Badge variant={test.status === 'Passed' ? 'default' : 'destructive'}>{test.status}</Badge>
+                        <Badge variant={test.status === 'Passed' ? 'secondary' : 'default'}>{test.status}</Badge>
                     )}
                  </div>
               ))}
