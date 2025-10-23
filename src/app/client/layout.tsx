@@ -17,6 +17,7 @@ import {
   Briefcase,
   Home,
   MessageSquare,
+  Users,
 } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -24,6 +25,7 @@ import { Button } from '@/components/ui/button';
 
 const navItems = [
   { href: '/client', icon: <Home />, label: 'My Projects' },
+  { href: '/client/find-talent', icon: <Users />, label: 'Find Talent' },
   { href: '/client/chat', icon: <MessageSquare />, label: 'Messages' },
 ];
 
@@ -49,7 +51,7 @@ export default function ClientLayout({
               <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname === item.href}
+                  isActive={pathname.startsWith(item.href) && (item.href !== '/client' || pathname === '/client')}
                   tooltip={item.label}
                 >
                   <Link href={item.href}>
