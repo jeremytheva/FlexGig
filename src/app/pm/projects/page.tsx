@@ -115,10 +115,11 @@ export default function PmProjectPage() {
                       : 'outline'
                     }>{d.status}</Badge>
                   {d.status === 'In Review' && (
-                    <>
-                        <RevisionDialog deliverable={d} onConfirm={requestRevisions} />
-                        <Button size="sm" onClick={() => sendToClient(d.id)}>Send to Client</Button>
-                    </>
+                    <RevisionDialog 
+                      deliverable={d} 
+                      onConfirmRevision={requestRevisions}
+                      onConfirmSend={sendToClient} 
+                    />
                   )}
                 </div>
               </div>

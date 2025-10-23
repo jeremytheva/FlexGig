@@ -20,31 +20,37 @@ import Image from 'next/image';
 
 interface RevisionDialogProps {
     deliverable: Deliverable;
-    onConfirm: (id: number, comments: string) => void;
+    onConfirmRevision: (id: number, comments: string) => void;
+    onConfirmSend: (id: number) => void;
 }
 
-export function RevisionDialog({ deliverable, onConfirm }: RevisionDialogProps) {
+export function RevisionDialog({ deliverable, onConfirmRevision, onConfirmSend }: RevisionDialogProps) {
     const [comments, setComments] = useState('');
     const [open, setOpen] = useState(false);
 
-    const handleConfirm = () => {
+    const handleRequestRevisions = () => {
         if (comments.trim()) {
-            onConfirm(deliverable.id, comments);
+            onConfirmRevision(deliverable.id, comments);
             setOpen(false);
             setComments('');
         }
     }
 
+    const handleSendToClient = () => {
+        onConfirmSend(deliverable.id);
+        setOpen(false);
+    }
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="sm" variant="outline">Request Revisions</Button>
+        <Button size="sm">Review</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Request Revisions: {deliverable.name}</DialogTitle>
+          <DialogTitle>Review Deliverable: {deliverable.name}</DialogTitle>
           <DialogDescription>
-            Review the deliverable and provide clear, actionable feedback for the freelancer.
+            Review the deliverable. You can approve and send it to the client, or request revisions from the freelancer.
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
@@ -81,13 +87,18 @@ export function RevisionDialog({ deliverable, onConfirm }: RevisionDialogProps) 
                 </div>
             </div>
         </div>
-        <DialogFooter>
-            <DialogClose asChild>
-                <Button variant="ghost">Cancel</Button>
-            </DialogClose>
-          <Button type="button" onClick={handleConfirm} disabled={!comments.trim()}>
-            Send Feedback to Freelancer
-          </Button>
+        <DialogFooter className="justify-between sm:justify-between">
+            <Button type="button" onClick={handleRequestRevisions} disabled={!comments.trim()} variant="outline">
+                Send Feedback to Freelancer
+            </Button>
+            <div className="flex gap-2">
+                <DialogClose asChild>
+                    <Button variant="ghost">Cancel</Button>
+                </DialogClose>
+                <Button type="button" onClick={handleSendToClient}>
+                    Approve & Send to Client
+                </Button>
+            </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>
