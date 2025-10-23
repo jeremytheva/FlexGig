@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText, Send } from "lucide-react";
+import { CheckCircle, Clock, AlertTriangle, Send, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const project = {
@@ -81,7 +81,7 @@ export default function PmProjectPage() {
            <CardContent>
             <Progress value={project.progress} className="mb-2" />
             <p className="text-2xl font-bold text-right">{project.progress}%</p>
-           </CardContent>
+           </_CardContent>
         </Card>
       </div>
 
