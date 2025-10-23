@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText, Save, PlusCircle } from "lucide-react";
+import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ProjectTemplates } from '@/components/client/project-templates';
+import { NewProjectDialog } from '@/components/client/new-project-dialog';
 
 const project = {
   name: 'E-commerce Platform',
@@ -58,13 +59,6 @@ export default function ProjectPage() {
       description: `"${project.name}" has been saved to your templates.`,
     });
   };
-  
-  const handleNewProject = () => {
-    toast({
-      title: "New Project Started",
-      description: "A project manager will be in touch shortly to scope your new project.",
-    });
-  };
 
   return (
     <div className="space-y-8">
@@ -73,10 +67,7 @@ export default function ProjectPage() {
           <h1 className="text-3xl font-bold font-headline">My Projects</h1>
           <p className="text-muted-foreground">Manage your active and past projects.</p>
         </div>
-        <Button onClick={handleNewProject}>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            New Project
-        </Button>
+        <NewProjectDialog />
       </header>
 
       <Card>
