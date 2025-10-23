@@ -58,16 +58,16 @@ export default function Home() {
                 </CardHeader>
                 <CardContent className="p-8 pt-0">
                   <Link href="/client">
-                    <Button variant="secondary" className="w-full text-lg" size="lg">
+                    <Button variant="default" className="w-full text-lg bg-accent text-accent-foreground hover:bg-accent/90" size="lg">
                       Enter Client Portal <ArrowRight className="ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
               </Card>
-               <Card className="transform transition-transform duration-300 hover:scale-105 hover:shadow-xl lg:col-span-3">
+               <Card className="transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
                 <CardHeader className="p-8">
                   <div className="flex items-center gap-4">
-                    <div className="bg-secondary/20 p-3 rounded-full">
+                    <div className="bg-secondary p-3 rounded-full">
                       <Users className="h-8 w-8 text-secondary-foreground" />
                     </div>
                     <CardTitle className="text-2xl font-bold font-headline">Freelancer</CardTitle>
@@ -78,8 +78,8 @@ export default function Home() {
                 </CardHeader>
                 <CardContent className="p-8 pt-0">
                   <Link href="/freelancer">
-                    <Button variant="outline" className="w-full text-lg" size="lg">
-                      Enter Freelancer Portal <ArrowRight className="ml-2" />
+                    <Button variant="secondary" className="w-full text-lg" size="lg">
+                      Enter Talent Portal <ArrowRight className="ml-2" />
                     </Button>
                   </Link>
                 </CardContent>
