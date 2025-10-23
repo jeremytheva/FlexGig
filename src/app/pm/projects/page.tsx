@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, AlertTriangle, Send, FileText } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { RevisionDialog } from '@/components/pm/revision-dialog';
 
 const project = {
   name: 'E-commerce Platform',
@@ -23,6 +24,8 @@ const project = {
   ],
 };
 
+export type Deliverable = typeof project.deliverables[0];
+
 export default function PmProjectPage() {
   const { toast } = useToast();
   const [deliverables, setDeliverables] = useState(project.deliverables);
@@ -35,12 +38,12 @@ export default function PmProjectPage() {
     });
   };
 
-  const requestRevisions = (id: number) => {
+  const requestRevisions = (id: number, comments: string) => {
     setDeliverables(deliverables.map(d => d.id === id ? { ...d, status: 'Revisions Requested' as any } : d));
     toast({
         variant: "destructive",
       title: "Revisions Requested",
-      description: "The deliverable has been sent back to the freelancer with your comments.",
+      description: `The deliverable has been sent back to the freelancer with your comments: "${comments}"`,
     });
   };
 
@@ -113,7 +116,7 @@ export default function PmProjectPage() {
                     }>{d.status}</Badge>
                   {d.status === 'In Review' && (
                     <>
-                        <Button size="sm" variant="outline" onClick={() => requestRevisions(d.id)}>Request Revisions</Button>
+                        <RevisionDialog deliverable={d} onConfirm={requestRevisions} />
                         <Button size="sm" onClick={() => sendToClient(d.id)}>Send to Client</Button>
                     </>
                   )}
