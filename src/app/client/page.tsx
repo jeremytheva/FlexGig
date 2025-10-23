@@ -5,10 +5,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText, Save } from "lucide-react";
+import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText, Save, Star, Users } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ProjectTemplates } from '@/components/client/project-templates';
 import { NewProjectDialog } from '@/components/client/new-project-dialog';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const project = {
   name: 'E-commerce Platform',
@@ -29,6 +30,7 @@ export default function ProjectPage() {
   const { toast } = useToast();
   const [revisionCount, setRevisionCount] = useState(0);
   const [deliverables, setDeliverables] = useState(project.deliverables);
+  const [isFavorite, setIsFavorite] = useState(false);
   
   const handleApprove = (id: number) => {
     setDeliverables(deliverables.map(d => d.id === id ? { ...d, status: 'Approved' } : d));
@@ -59,6 +61,16 @@ export default function ProjectPage() {
       description: `"${project.name}" has been saved to your templates.`,
     });
   };
+
+  const handleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    toast({
+      title: !isFavorite ? "Freelancer Added to Favorites" : "Freelancer Removed from Favorites",
+      description: !isFavorite 
+        ? `${project.freelancer} can now be directly assigned to future projects.`
+        : `${project.freelancer} has been removed from your favorites.`,
+    });
+  }
 
   return (
     <div className="space-y-8">
@@ -129,6 +141,31 @@ export default function ProjectPage() {
                     </div>
                     ))}
                 </div>
+            </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+            <CardTitle className="flex items-center gap-2"><Users /> Project Team</CardTitle>
+            <CardDescription>Manage your direct relationships with freelancers.</CardDescription>
+        </CardHeader>
+        <CardContent>
+            <div className="flex items-center justify-between p-3 rounded-md border">
+                <div className="flex items-center gap-3">
+                    <Avatar className="h-10 w-10">
+                        <AvatarImage src="https://picsum.photos/seed/freelancer-avatar/100/100" data-ai-hint="person avatar" />
+                        <AvatarFallback>FL</AvatarFallback>
+                    </Avatar>
+                    <div>
+                        <p className="font-semibold">{project.freelancer}</p>
+                        <p className="text-sm text-muted-foreground">Lead Developer</p>
+                    </div>
+                </div>
+                <Button variant={isFavorite ? 'default' : 'outline'} onClick={handleFavorite}>
+                    <Star className={`mr-2 h-4 w-4 ${isFavorite ? 'text-yellow-400 fill-yellow-400' : ''}`} />
+                    {isFavorite ? 'Favorite' : 'Add to Favorites'}
+                </Button>
             </div>
         </CardContent>
       </Card>
