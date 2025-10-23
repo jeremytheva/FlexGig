@@ -10,6 +10,8 @@ import { MessageSquare, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SlidersHorizontal } from "lucide-react";
 
 export default function FindTalentPage() {
     const { toast } = useToast();
@@ -30,10 +32,40 @@ export default function FindTalentPage() {
         </p>
       </header>
 
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input placeholder="Search by skill (e.g., React, UI/UX, Python)" className="pl-10" />
-      </div>
+      <Card>
+        <CardContent className="p-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="relative lg:col-span-2">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input placeholder="Search by name or keyword..." className="pl-10" />
+              </div>
+              <Select>
+                  <SelectTrigger>
+                      <SelectValue placeholder="Filter by skill" />
+                  </SelectTrigger>
+                  <SelectContent>
+                      <SelectItem value="react">React</SelectItem>
+                      <SelectItem value="python">Python</SelectItem>
+                      <SelectItem value="vue">Vue</SelectItem>
+                      <SelectItem value="typescript">TypeScript</SelectItem>
+                      <SelectItem value="ui-ux">UI/UX</SelectItem>
+                  </SelectContent>
+              </Select>
+              <Select>
+                  <SelectTrigger>
+                      <SelectValue placeholder="Filter by availability" />
+                  </SelectTrigger>
+                  <SelectContent>
+                      <SelectItem value="this-week">This week</SelectItem>
+                      <SelectItem value="next-week">Next week</SelectItem>
+                      <SelectItem value="2-weeks">Within 2 weeks</SelectItem>
+                      <SelectItem value="next-month">Next month</SelectItem>
+                  </SelectContent>
+              </Select>
+          </div>
+        </CardContent>
+      </Card>
+
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {freelancers.map((freelancer) => (
