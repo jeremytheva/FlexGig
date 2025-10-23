@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText, Save } from "lucide-react";
+import { CheckCircle, Clock, AlertTriangle, ArrowUpCircle, FileText, Save, PlusCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ProjectTemplates } from '@/components/client/project-templates';
 
@@ -58,71 +58,87 @@ export default function ProjectPage() {
       description: `"${project.name}" has been saved to your templates.`,
     });
   };
+  
+  const handleNewProject = () => {
+    toast({
+      title: "New Project Started",
+      description: "A project manager will be in touch shortly to scope your new project.",
+    });
+  };
 
   return (
     <div className="space-y-8">
       <header className="flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold font-headline">{project.name}</h1>
-          <p className="text-muted-foreground">Client: {project.client}</p>
+          <h1 className="text-3xl font-bold font-headline">My Projects</h1>
+          <p className="text-muted-foreground">Manage your active and past projects.</p>
         </div>
-        <Badge variant={project.status === 'Active' ? 'default' : 'secondary'}>{project.status}</Badge>
+        <Button onClick={handleNewProject}>
+            <PlusCircle className="mr-2 h-4 w-4" />
+            New Project
+        </Button>
       </header>
 
-      <div className="grid md:grid-cols-3 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Budget</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${project.budget.toLocaleString()}</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Timeline</CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{project.timeline}</div>
-          </CardContent>
-        </Card>
-        <Card>
-           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium">Overall Progress</CardTitle>
-           </CardHeader>
-           <CardContent>
-            <Progress value={project.progress} className="mb-2" />
-            <p className="text-2xl font-bold text-right">{project.progress}%</p>
-           </CardContent>
-        </Card>
-      </div>
-
       <Card>
-        <CardHeader>
-          <CardTitle>Deliverables & Approval</CardTitle>
-          <CardDescription>Review and approve deliverables to release funds.</CardDescription>
+        <CardHeader className="flex flex-row justify-between items-start">
+            <div>
+                <CardTitle>{project.name}</CardTitle>
+                <CardDescription>Client: {project.client}</CardDescription>
+            </div>
+            <Badge variant={project.status === 'Active' ? 'default' : 'secondary'}>{project.status}</Badge>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {deliverables.map(d => (
-              <div key={d.id} className="flex items-center justify-between p-3 rounded-md border">
-                <div className="flex items-center gap-3">
-                    {d.status === 'Approved' && <CheckCircle className="h-5 w-5 text-green-500"/>}
-                    {d.status === 'In Review' && <Clock className="h-5 w-5 text-yellow-500"/>}
-                    {d.status === 'Pending' && <AlertTriangle className="h-5 w-5 text-muted-foreground"/>}
-                    <span className="font-medium">{d.name}</span>
+        <CardContent className="space-y-6">
+            <div className="grid md:grid-cols-3 gap-4">
+                <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Budget</CardTitle>
+                    <FileText className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">${project.budget.toLocaleString()}</div>
+                </CardContent>
+                </Card>
+                <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Timeline</CardTitle>
+                    <Clock className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">{project.timeline}</div>
+                </CardContent>
+                </Card>
+                <Card>
+                <CardHeader className="pb-2">
+                    <CardTitle className="text-sm font-medium">Overall Progress</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Progress value={project.progress} className="mb-2" />
+                    <p className="text-2xl font-bold text-right">{project.progress}%</p>
+                </CardContent>
+                </Card>
+            </div>
+
+            <div>
+                <h3 className="font-semibold mb-2">Deliverables & Approval</h3>
+                <div className="space-y-4">
+                    {deliverables.map(d => (
+                    <div key={d.id} className="flex items-center justify-between p-3 rounded-md border">
+                        <div className="flex items-center gap-3">
+                            {d.status === 'Approved' && <CheckCircle className="h-5 w-5 text-green-500"/>}
+                            {d.status === 'In Review' && <Clock className="h-5 w-5 text-yellow-500"/>}
+                            {d.status === 'Pending' && <AlertTriangle className="h-5 w-5 text-muted-foreground"/>}
+                            <span className="font-medium">{d.name}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                        <Badge variant={d.status === 'Approved' ? 'secondary' : 'outline'}>{d.status}</Badge>
+                        {d.status === 'In Review' && (
+                            <Button size="sm" onClick={() => handleApprove(d.id)}>Approve</Button>
+                        )}
+                        </div>
+                    </div>
+                    ))}
                 </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant={d.status === 'Approved' ? 'secondary' : 'outline'}>{d.status}</Badge>
-                  {d.status === 'In Review' && (
-                    <Button size="sm" onClick={() => handleApprove(d.id)}>Approve</Button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+            </div>
         </CardContent>
       </Card>
       
