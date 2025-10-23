@@ -26,6 +26,7 @@ import { Button } from '@/components/ui/button';
 
 const navItems = [
   { href: '/pm', icon: <Home />, label: 'Dashboard' },
+  { href: '/pm/projects', icon: <Briefcase />, label: 'Projects' },
   { href: '/pm/scope-vetting', icon: <Search />, label: 'Scope Vetting' },
   { href: '/pm/matching', icon: <Users />, label: 'Find Talent' },
   { href: '/pm/chat', icon: <MessageSquare />, label: 'Messages' },
