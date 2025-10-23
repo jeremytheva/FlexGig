@@ -81,7 +81,7 @@ export default function PmProjectPage() {
            <CardContent>
             <Progress value={project.progress} className="mb-2" />
             <p className="text-2xl font-bold text-right">{project.progress}%</p>
-           </_CardContent>
+           </CardContent>
         </Card>
       </div>
 
