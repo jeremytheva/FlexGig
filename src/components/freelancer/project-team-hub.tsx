@@ -212,7 +212,7 @@ export function ProjectTeamHub() {
             <CardHeader>
                 <CardTitle>Internal Team Chat</CardTitle>
                 <CardDescription>Visible only to your team.</CardDescription>
-            </CardHeader>
+            </Header>
             <CardContent>
                 <p className="text-sm text-muted-foreground">Internal chat coming soon...</p>
             </CardContent>

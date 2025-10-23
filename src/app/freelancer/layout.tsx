@@ -52,7 +52,7 @@ export default function FreelancerLayout({
               <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname === item.href}
+                  isActive={pathname.startsWith(item.href) && (item.href !== '/freelancer' || pathname === '/freelancer')}
                   tooltip={item.label}
                 >
                   <Link href={item.href}>
