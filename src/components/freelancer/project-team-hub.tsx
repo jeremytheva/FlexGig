@@ -50,10 +50,10 @@ const teamMembers = [
 ];
 
 const initialChecklist = [
-  { id: 'task-1', label: 'Component library setup', completed: true },
-  { id: 'task-2', label: 'Product page development', completed: true },
-  { id: 'task-3', label: 'Shopping cart implementation', completed: false },
-  { id: 'task-4', label: 'Code review and linting', completed: false },
+  { id: 'task-1', label: 'Component library setup', completed: true, attached: true },
+  { id: 'task-2', label: 'Product page development', completed: true, attached: true },
+  { id: 'task-3', label: 'Shopping cart implementation', completed: false, attached: false },
+  { id: 'task-4', label: 'Code review and linting', completed: false, attached: false },
 ];
 
 type ReviewStatus = 'Not Submitted' | 'In PM Review' | 'Sent Back by PM' | 'In Client Review' | 'Approved';
@@ -67,6 +67,14 @@ export function ProjectTeamHub() {
   const handleChecklistItem = (id: string, checked: boolean) => {
     setChecklist(checklist.map((item) => (item.id === id ? { ...item, completed: checked } : item)));
   };
+
+  const handleAttachFile = (id: string) => {
+    setChecklist(checklist.map((item) => (item.id === id ? { ...item, attached: true } : item)));
+    toast({
+        title: 'File Attached',
+        description: `A file has been attached to "${checklist.find(i => i.id === id)?.label}".`
+    })
+  }
 
   const allTasksCompleted = checklist.every((item) => item.completed);
 
@@ -126,15 +134,21 @@ export function ProjectTeamHub() {
           </CardHeader>
           <CardContent className="space-y-4">
             {checklist.map((item) => (
-              <div key={item.id} className="flex items-center space-x-3 p-3 border rounded-md">
-                <Checkbox
-                  id={item.id}
-                  checked={item.completed}
-                  onCheckedChange={(checked) => handleChecklistItem(item.id, Boolean(checked))}
-                />
-                <Label htmlFor={item.id} className={`flex-1 ${item.completed ? 'line-through text-muted-foreground' : ''}`}>
-                  {item.label}
-                </Label>
+              <div key={item.id} className="flex items-center justify-between p-3 border rounded-md">
+                <div className="flex items-center space-x-3">
+                    <Checkbox
+                    id={item.id}
+                    checked={item.completed}
+                    onCheckedChange={(checked) => handleChecklistItem(item.id, Boolean(checked))}
+                    />
+                    <Label htmlFor={item.id} className={`flex-1 ${item.completed ? 'line-through text-muted-foreground' : ''}`}>
+                    {item.label}
+                    </Label>
+                </div>
+                <Button variant={item.attached ? "secondary" : "outline"} size="sm" onClick={() => handleAttachFile(item.id)}>
+                    <Paperclip className="mr-2 h-4 w-4" />
+                    {item.attached ? 'File Attached' : 'Attach File'}
+                </Button>
               </div>
             ))}
           </CardContent>
