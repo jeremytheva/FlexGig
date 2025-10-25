@@ -54,7 +54,7 @@ export default function PmLayout({
               <SidebarMenuItem key={item.href}>
                 <SidebarMenuButton
                   asChild
-                  isActive={pathname === item.href}
+                  isActive={pathname.startsWith(item.href) && (item.href !== '/pm' || pathname === '/pm')}
                   tooltip={item.label}
                 >
                   <Link href={item.href}>
